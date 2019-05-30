@@ -1,9 +1,25 @@
 <template>
   <div>
+     <!-- v-if="showRobot"  -->
+    <div v-if="showRobot" class="z-index-10000 position-fixed h-100 bg-dark w-100 d-flex justify-content-center align-items-center z-index-100 no-select">
+      <div class="bg-white pb-4">
+        <img src="/static/giphy.gif" class="noselect" alt="">
+        <div class="text-center noselect z-index-10000">
+          <br>
+          <h3 class="blinking">
+            You are a dancing ROBOT!
+          </h3>
+          Total attempts: {{ ttlApps }} <br><br>
+          <div @click="startOver()" class="fake-link">
+            Start Over.
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container pt-5 pb-5">
       <div class="row">
-        <div class="col-md-3">
-          <img src="/static/avatar.png" class="w-50 pb-3" alt=""><br>
+        <div class="col-md-3 text-center">
+          <img src="/static/avatar.png" class="noselect w-50 pb-3" alt=""><br>
           <input type="text" class="mb-1" value="Karma Drupka"> <br>
         </div>
         <div class="col-md-9">
@@ -69,14 +85,14 @@
           <button @click="goToFirstDay()">Go to first day</button>
         </div>
       </div>
-      <div class="row" v-show="wins === true">
+      <!-- <div class="row" v-show="wins === true">
         <div class="col-md-12 text-center"><br><br>
           <h3 class="blinking">
             You are a dancing ROBOT!
           </h3>
           Total attempts: {{ ttlApps }}
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -100,6 +116,7 @@ export default {
       resFirstDay: 'No First Day',
       ttlFirstDay: 0,
       wins: false,
+      showRobot: false,
     }
   },
   computed: {
@@ -166,8 +183,24 @@ export default {
         this.ttlFirstDay++
 
         this.playShazam();
+        this.toggleRobot();
         this.wins = true
       }
+    },
+    toggleRobot () {
+      this.showRobot = !this.showRobot
+    },
+    startOver () {
+      this.showRobot = false
+
+      this.ttlSendApp = 0
+      this.ttlApps = 0
+      this.ttlInterview = 0
+      this.ttlFirstDay = 0
+      this.resSendApp = 'Not Applied'
+      this.resInterview = 'Not Interviewed'
+      this.resNegotiate = 'Not Negotiated'
+      this.resFirstDay = 'No First Day'
     },
     playChaChing () {
       let file = '/static/cha-ching.mp3'
@@ -184,6 +217,32 @@ export default {
 </script>
 
 <style>
+.bg-dark {
+  background: rgba(0, 0, 0, .05) !important;
+}
+
+.z-index-100 {
+  z-index: 100;
+}
+
+.z-index-10000 {
+  z-index: 10000;
+}
+
+.fake-link:hover {
+  cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
 .blinking {
   animation: blink-animation .75s steps(5, start) infinite;
   -webkit-animation: blink-animation .75s steps(5, start) infinite;
