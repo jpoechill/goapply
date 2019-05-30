@@ -48,32 +48,33 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 pb-4">
           {{ resSendApp }} <br>
           Attempts {{ ttlSendApp }} <br><br>
           <button @click="applyToJobs()">Apply to Jobs</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 pb-4">
           {{ resInterview }} <br>
           Attempts {{ ttlInterview }}<br><br>
           <button @click="interview()">Hear back from Interview</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 pb-4">
           {{ resNegotiate }} <br>
           Attempts {{ ttlNegotiate }}<br><br>
           <button @click="negotiate()">Negotiate</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 pb-4">
           {{ resFirstDay }} <br>
           Attempts {{ ttlFirstDay }}<br><br>
           <button @click="goToFirstDay()">Go to first day</button>
         </div>
       </div>
-      <div class="row" v-if="wins">
+      <div class="row" v-show="wins === true">
         <div class="col-md-12 text-center"><br><br>
           <h3 class="blinking">
             You are a dancing ROBOT!
-          </h3>Total attempts:
+          </h3>
+          Total attempts: {{ ttlApps }}
         </div>
       </div>
     </div>
@@ -101,6 +102,11 @@ export default {
       wins: false,
     }
   },
+  computed: {
+    ttlApps: function () {
+      return this.ttlSendApp + this.ttlInterview + this.ttlNegotiate + this.ttlFirstDay
+    }
+  },
   methods: {
     applyToJobs () {
       let rnd = Math.floor((Math.random() * 20) + 1);
@@ -112,6 +118,8 @@ export default {
       } else if (rnd === 1 && this.resSendApp !== 'Accepted!') {
         // success
         this.resSendApp = 'Accepted!'
+        this.ttlSendApp++
+
         this.playChaChing()
       }
     },
@@ -125,6 +133,8 @@ export default {
       } else if (rnd === 1 && this.resInterview !== 'Accepted!') {
         // success
         this.resInterview = 'Accepted!'
+        this.ttlInterview++
+
         this.playChaChing()
       }
     },
@@ -138,6 +148,8 @@ export default {
       } else if (rnd === 1 && this.resNegotiate !== 'Accepted!') {
         // success
         this.resNegotiate = 'Accepted!'
+        this.ttlNegotiate++
+
         this.playChaChing()
       }
     },
@@ -151,6 +163,7 @@ export default {
       } else if (rnd === 1 && this.resFirstDay !== 'Accepted!') {
         // success
         this.resFirstDay = 'Accepted!'
+        this.ttlFirstDay++
 
         this.playShazam();
         this.wins = true
