@@ -85,14 +85,6 @@
           <button @click="goToFirstDay()">Go to first day</button>
         </div>
       </div>
-      <!-- <div class="row" v-show="wins === true">
-        <div class="col-md-12 text-center"><br><br>
-          <h3 class="blinking">
-            You are a dancing ROBOT!
-          </h3>
-          Total attempts: {{ ttlApps }}
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -196,6 +188,7 @@ export default {
       this.ttlSendApp = 0
       this.ttlApps = 0
       this.ttlInterview = 0
+      this.ttlNegotiate = 0
       this.ttlFirstDay = 0
       this.resSendApp = 'Not Applied'
       this.resInterview = 'Not Interviewed'
